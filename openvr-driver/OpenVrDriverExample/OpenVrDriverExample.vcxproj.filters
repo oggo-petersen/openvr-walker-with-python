@@ -49,7 +49,7 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="resources\game_controller.svg" />
-    <None Include="resources\legacy_bindings_example.json" />
+    <None Include="resources\legacy_bindings_esp32.json" />
     <None Include="resources\driver.vrdrivermanifest" />
   </ItemGroup>
   <ItemGroup>

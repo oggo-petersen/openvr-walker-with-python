@@ -28,9 +28,9 @@
       }
    },
    "category" : "legacy",
-   "controller_type" : "example_controller",
-   "description" : "Legacy mapping for example",
-   "name" : "Legacy_Binding_Example",
+   "controller_type" : "esp32_controller",
+   "description" : "Legacy mapping for ESP32",
+   "name" : "Legacy_Binding_Esp32",
    "options" : {
       "mirror_actions" : false,
       "returnBindingsWithLeftHand" : true,

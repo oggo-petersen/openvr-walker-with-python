@@ -1,6 +1,6 @@
 {
 	"alwaysActivate": true,
-	"name" : "example",
+	"name" : "esp32",
 	"directory" : "",
 	"resourceOnly" : false,
 	"prefersUpperDeviceIndices" :  true,
