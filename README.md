@@ -17,5 +17,5 @@ All credits go to FinallyFunctional for such an amazing work!
 Install ADAFruit MPU6050 driver in Arduino IDE.
 Don't forget to put your wifi details and the ip from the machine that is running your python server, as well your VR games!
 
-## More can be found at my article!
+## More can be found in my article!
 -[Petersen Projects | Walking in VR with ESP32](https://petersen-projects.com/?p=30)
