@@ -45,48 +45,50 @@ DriverPose_t ControllerDriver::GetPose()
 	return pose;
 }
 
-void ControllerDriver::RunFrame()
-{
+float GetCurrentSpeed() {
 	// Set movement speed.
 	float currMovSpeed = WALK_SPEED;
 	if (GetKeyState('R') & 0x8000) {
 		currMovSpeed = RUN_SPEED;
 	}
+	return currMovSpeed;
+}
 
-	// Direction of movement.
+
+void UpdateYAxis(VRInputComponentHandle_t joystickYHandle, VRInputComponentHandle_t trackpadYHandle, float currMovSpeed) {
+	int direction = 0;
 	if (GetKeyState('W') & 0x8000) {
-		VRDriverInput()->UpdateScalarComponent(joystickYHandle, currMovSpeed, 0);
-		VRDriverInput()->UpdateScalarComponent(trackpadYHandle, currMovSpeed, 0);
+		direction = 1;
 	}
 	else if (GetKeyState('S') & 0x8000) {
-		VRDriverInput()->UpdateScalarComponent(joystickYHandle, -currMovSpeed, 0);
-		VRDriverInput()->UpdateScalarComponent(trackpadYHandle, -currMovSpeed, 0);
-	}
-	else if (!(
-		(GetKeyState('W') & 0x8000) &&
-		(GetKeyState('S') & 0x8000)
-		)) {
-		VRDriverInput()->UpdateScalarComponent(joystickYHandle, 0.0f, 0); //move forward
-		VRDriverInput()->UpdateScalarComponent(trackpadYHandle, 0.0f, 0); //move foward
+		direction = -1;
 	}
 
-	// We can also move sideways.
+	VRDriverInput()->UpdateScalarComponent(joystickYHandle, currMovSpeed * direction, 0);
+	VRDriverInput()->UpdateScalarComponent(trackpadYHandle, currMovSpeed * direction, 0);
+}
+
+
+void UpdateXAxis(VRInputComponentHandle_t joystickXHandle, VRInputComponentHandle_t trackpadXHandle, float currMovSpeed) {
+	int direction = 0;
 	if (GetKeyState('A') & 0x8000) {
-		VRDriverInput()->UpdateScalarComponent(joystickXHandle, -currMovSpeed, 0);
-		VRDriverInput()->UpdateScalarComponent(trackpadXHandle, -currMovSpeed, 0);
+		direction = -1;
 	}
 	else if (GetKeyState('D') & 0x8000) {
-		VRDriverInput()->UpdateScalarComponent(joystickXHandle, currMovSpeed, 0);
-		VRDriverInput()->UpdateScalarComponent(trackpadXHandle, currMovSpeed, 0);
-	}
-	else if (!(
-		(GetKeyState('A') & 0x8000) &&
-		(GetKeyState('D') & 0x8000)
-		)) {
-		VRDriverInput()->UpdateScalarComponent(joystickXHandle, 0.0f, 0);
-		VRDriverInput()->UpdateScalarComponent(trackpadXHandle, 0.0f, 0);
+		direction = 1;
 	}
 
+	VRDriverInput()->UpdateScalarComponent(joystickXHandle, currMovSpeed * direction, 0);
+	VRDriverInput()->UpdateScalarComponent(trackpadXHandle, currMovSpeed * direction, 0);
+}
+
+void ControllerDriver::RunFrame()
+{
+	float currMovSpeed = GetCurrentSpeed();
+	// Update Y Axis according to the keyboard pressed buttons.
+	UpdateYAxis(joystickYHandle, trackpadYHandle, currMovSpeed);
+	// Update X Axis according to the keyboard pressed buttons.
+	UpdateXAxis(joystickXHandle, trackpadXHandle, currMovSpeed);
 }
 
 void ControllerDriver::Deactivate()
